@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 1: Data Cleaning & Visualization</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="superstore.css">
+    <link rel="stylesheet" href="prism.css">
+    <link rel="shortcut icon" href="faviconb.jpeg" type="image/x-icon">
+
+ 
+</head>
+<body>
+    <div class="container">
+        <!-- Back Button -->
+        <button class="back-button" onclick="window.history.back()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Back to Projects
+        </button>
+
+        <!-- Project Header -->
+        <div class="project-header animate-fade-in">
+            <h1 class="project-title">
+                Data Cleaning & Visualization
+            </h1>
+            <p class="project-description">
+                A comprehensive data analysis project utilizing Python for data cleaning and preprocessing, 
+                SQL for complex calculations and data aggregation, and Power BI for creating interactive 
+                dashboards that deliver actionable business insights.
+            </p>
+        </div>
+
+
+        <!-- Tech Stack Badges -->
+        <div class="tech-badges animate-fade-in" style="animation-delay: 0.1s">
+            <div class="tech-badge">
+                <span>🐍</span>
+                <span>Python</span>
+            </div>
+            <div class="tech-badge">
+                <span>🗄️</span>
+                <span>SQL</span>
+            </div>
+            <div class="tech-badge">
+                <span>📊</span>
+                <span>Power BI</span>
+            </div>
+        </div>
+
+        
+
+
+        <!-- Code Snippets Section -->
+        <div style="margin-bottom: 2.5rem;">
+            <!-- Python Code Snippet -->
+            <div class="card animate-fade-in" style="animation-delay: 0.2s">
+                <div class="card-header">
+                    <div class="card-header-clickable" onclick="toggleCollapsible('python')">
+                        <div class="card-title-wrapper">
+                            <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="16 18 22 12 16 6"></polyline>
+                                <polyline points="8 6 2 12 8 18"></polyline>
+                            </svg>
+                            <h3 class="card-title">Python Data Cleaning</h3>
+                        </div>
+                        <svg id="python-chevron" class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </div>
+                    <p class="card-description">
+                        Preprocessing and transformation using pandas
+                    </p>
+                </div>
+                <div id="python-content" class="collapsible-content">
+                    <div class="card-content">
+                        <div class="code-block">
+                            <pre class="language-python"><code>import pandas as pd
+import numpy as np
+
+# Load data
+df = pd.read_excel('Sample - Superstore.xls', sheet_name='Orders')
+
+# 1. BASIC DATA QUALITY CHECK
+def check_data_quality(df):
+    """Quick data quality validation"""
+    print("=== DATA QUALITY CHECK ===")
+    print(f"Total rows: {len(df)}")
+    print(f"Total columns: {len(df.columns)}")
+    print("\nMissing values:")
+    print(df.isnull().sum())
+    print("\nData types:")
+    print(df.dtypes)
+    
+# 2. VALIDATE KEY METRICS
+def validate_dashboard_metrics(df):
+    """Compare with your Power BI dashboard"""
+    print("\n=== DASHBOARD METRICS VALIDATION ===")
+    
+    # Convert dates
+    df['Order Date'] = pd.to_datetime(df['Order Date'])
+    
+    # Key metrics
+    total_sales = df['Sales'].sum()
+    total_profit = df['Profit'].sum()
+    total_orders = df['Order ID'].nunique()
+    
+    # Profit by product (top 5)
+    top_products = df.groupby('Product Name')['Profit'].sum().nlargest(5)
+    
+    # Sales by segment
+    segment_sales = df.groupby('Segment')['Sales'].sum()
+    
+    # Print results
+    print(f"Total Sales: ${total_sales:,.2f}")
+    print(f"Total Profit: ${total_profit:,.2f}")
+    print(f"Total Orders: {total_orders:,}")
+    print(f"Profit Margin: {(total_profit/total_sales*100):.1f}%")
+    
+    print("\nTop 5 Products by Profit:")
+    for product, profit in top_products.items():
+        print(f"  {product[:30]}...: ${profit:,.2f}")
+    
+    print("\nSales by Segment:")
+    for segment, sales in segment_sales.items():
+        print(f"  {segment}: ${sales:,.2f}")
+    
+    # Return validation dictionary
+    return {
+        'total_sales': total_sales,
+        'total_profit': total_profit,
+        'total_orders': total_orders,
+        'top_products': top_products,
+        'segment_sales': segment_sales
+    }
+
+# 3. DATA CLEANING FUNCTION
+def clean_data(df):
+    """Basic data cleaning steps"""
+    # Fix date columns
+    date_cols = ['Order Date', 'Ship Date']
+    for col in date_cols:
+        if col in df.columns:
+            df[col] = pd.to_datetime(df[col], errors='coerce')
+    
+    # Remove duplicates
+    initial_rows = len(df)
+    df = df.drop_duplicates()
+    removed = initial_rows - len(df)
+    
+    # Remove negative sales (if any)
+    df = df[df['Sales'] >= 0]
+    
+    print(f"\nCleaned data:")
+    print(f"  - Removed {removed} duplicate rows")
+    print(f"  - Remaining rows: {len(df)}")
+    
+    return df
+
+# RUN THE VALIDATION
+if __name__ == "__main__":
+    # Check data quality
+    check_data_quality(df)
+    
+    # Clean data
+    df_clean = clean_data(df)
+    
+    # Validate metrics
+    validation_results = validate_dashboard_metrics(df_clean)
+    
+    # Save clean data
+    df_clean.to_csv('superstore_clean.csv', index=False)
+    print("\n✅ Clean data saved to 'superstore_clean.csv'") </code> </pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+  
+            <!-- SQL Code Snippet -->
+            <div class="card animate-fade-in" style="animation-delay: 0.3s">
+                <div class="card-header">
+                    <div class="card-header-clickable" onclick="toggleCollapsible('sql')">
+                        <div class="card-title-wrapper">
+                            <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="16 18 22 12 16 6"></polyline>
+                                <polyline points="8 6 2 12 8 18"></polyline>
+                            </svg>
+                            <h3 class="card-title">SQL Analysis</h3>
+                        </div>
+                        <svg id="sql-chevron" class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </div>
+                    <p class="card-description">
+                        Complex queries for aggregation and calculations
+                    </p>
+                </div>
+                <div id="sql-content" class="collapsible-content">
+                    <div class="card-content">
+                        <div class="code-block">
+                            <pre><code class="language-sql">
+-- 1. CHECK TOTAL SALES & PROFIT
+SELECT 
+  'Sales' AS metric, SUM("Sales") AS value FROM orders
+UNION ALL
+SELECT 'Profit', SUM("Profit") FROM orders;
+
+-- 2. CHECK SALES BY SEGMENT (vs your dashboard)
+SELECT 
+  "Segment",
+  SUM("Sales") AS total_sales,
+  ROUND(100 * SUM("Sales") / (SELECT SUM("Sales") FROM orders), 1) AS pct
+FROM orders
+GROUP BY "Segment"
+ORDER BY total_sales DESC;
+
+-- 3. CHECK TOP 10 PRODUCTS BY PROFIT
+SELECT 
+  "Product Name",
+  SUM("Profit") AS profit
+FROM orders
+GROUP BY "Product Name"
+ORDER BY profit DESC
+LIMIT 10;
+
+-- 4. CHECK MONTHLY SALES TREND
+SELECT 
+  TO_CHAR("Order Date", 'YYYY-MM') AS month,
+  SUM("Sales") AS sales
+FROM orders
+GROUP BY TO_CHAR("Order Date", 'YYYY-MM')
+ORDER BY month;
+
+-- 5. CHECK PROFIT BY STATE
+SELECT 
+  "State/Province",
+  SUM("Profit") AS profit
+FROM orders
+GROUP BY "State/Province"
+ORDER BY profit DESC
+LIMIT 10;
+                            </code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+       
+
+        <!-- Dashboard Card -->
+        <div class="card dashboard-card animate-fade-in" style="animation-delay: 0.4s">
+            <div class="card-header">
+                <h3 class="card-title">Interactive Dashboard</h3>
+                <p class="card-description">
+                    Power BI visualization with interactive drill-down capabilities
+                </p>
+            </div>
+            <div class="card-content">
+                <!-- Power BI Embed Placeholder -->
+                <div class="dashboard-placeholder">
+                    <div class="dashboard-placeholder-content">
+                    
+                        <iframe title="superstore" width="100%" height="600" src="https://app.powerbi.com/view?r=eyJrIjoiNTQ5M2I0ZjAtZDVjYy00MDViLTk5OTAtNDI5ZGEzZWVjOWNhIiwidCI6ImIzYjZhMDVhLWZiY2EtNGZiOS05MTM4LTEwYzYwNGYxMzI2NSJ9" frameborder="0" allowFullScreen="true"></iframe>
+                        
+                    </div>
+
+                 
+                    
+                </div>
+
+                <!-- Project Highlights -->
+                <div class="highlights-grid">
+                    <div class="highlight-card">
+                        <h4 class="highlight-title">
+                            🐍 Data Cleaning
+                        </h4>
+                        <p class="highlight-description">
+                            Python pandas for data preprocessing, handling missing values, and data transformation
+                        </p>
+                    </div>
+                    <div class="highlight-card">
+                        <h4 class="highlight-title">
+                            🗄️ SQL Analysis
+                        </h4>
+                        <p class="highlight-description">
+                            Complex queries for data aggregation, joins, and statistical calculations
+                        </p>
+                    </div>
+                    <div class="highlight-card">
+                        <h4 class="highlight-title">
+                            📊 Visualization
+                        </h4>
+                        <p class="highlight-description">
+                            Interactive Power BI dashboards with drill-down capabilities and KPI tracking
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+                  
+                
+
+    <script>
+        function toggleCollapsible(id) {
+            const content = document.getElementById(id + '-content');
+            const chevron = document.getElementById(id + '-chevron');
+            
+            content.classList.toggle('open');
+            chevron.classList.toggle('rotated');
+        }
+    </script>
+
+    <script src="prism.js"></script>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 1: Data Cleaning & Visualization</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="churndata.css">
+ 
+</head>
+<body>
+    <div class="container">
+        <!-- Back Button -->
+        <button class="back-button" onclick="window.history.back()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Back to Projects
+        </button>
+
+        <!-- Project Header -->
+        <div class="project-header animate-fade-in">
+            <h1 class="project-title">
+                Project 1: Data Cleaning & Visualization
+            </h1>
+            <p class="project-description">
+                A comprehensive data analysis project utilizing Python for data cleaning and preprocessing, 
+                SQL for complex calculations and data aggregation, and Power BI for creating interactive 
+                dashboards that deliver actionable business insights.
+            </p>
+        </div>
+
+        <!-- Tech Stack Badges -->
+        <div class="tech-badges animate-fade-in" style="animation-delay: 0.1s">
+            <div class="tech-badge">
+                <span>🐍</span>
+                <span>Python</span>
+            </div>
+            <div class="tech-badge">
+                <span>🗄️</span>
+                <span>SQL</span>
+            </div>
+            <div class="tech-badge">
+                <span>📊</span>
+                <span>Power BI</span>
+            </div>
+        </div>
+
+        <!-- Code Snippets Section -->
+        <div style="margin-bottom: 2.5rem;">
+            <!-- Python Code Snippet -->
+            <div class="card animate-fade-in" style="animation-delay: 0.2s">
+                <div class="card-header">
+                    <div class="card-header-clickable" onclick="toggleCollapsible('python')">
+                        <div class="card-title-wrapper">
+                            <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="16 18 22 12 16 6"></polyline>
+                                <polyline points="8 6 2 12 8 18"></polyline>
+                            </svg>
+                            <h3 class="card-title">Python Data Cleaning</h3>
+                        </div>
+                        <svg id="python-chevron" class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </div>
+                    <p class="card-description">
+                        Preprocessing and transformation using pandas
+                    </p>
+                </div>
+                <div id="python-content" class="collapsible-content">
+                    <div class="card-content">
+                        <div class="code-block">
+                            <code>import pandas as pd
+import numpy as np
+
+# Load and clean dataset
+df = pd.read_csv('data.csv')
+df.dropna(inplace=True)
+
+# Data transformation
+df['date'] = pd.to_datetime(df['date'])
+df['value'] = df['value'].apply(lambda x: x * 100)
+
+# Export cleaned data
+df.to_csv('cleaned_data.csv', index=False)</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQL Code Snippet -->
+            <div class="card animate-fade-in" style="animation-delay: 0.3s">
+                <div class="card-header">
+                    <div class="card-header-clickable" onclick="toggleCollapsible('sql')">
+                        <div class="card-title-wrapper">
+                            <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="16 18 22 12 16 6"></polyline>
+                                <polyline points="8 6 2 12 8 18"></polyline>
+                            </svg>
+                            <h3 class="card-title">SQL Analysis</h3>
+                        </div>
+                        <svg id="sql-chevron" class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </div>
+                    <p class="card-description">
+                        Complex queries for aggregation and calculations
+                    </p>
+                </div>
+                <div id="sql-content" class="collapsible-content">
+                    <div class="card-content">
+                        <div class="code-block">
+                            <code>SELECT 
+    category,
+    COUNT(*) as total_records,
+    AVG(value) as avg_value,
+    SUM(value) as total_value
+FROM cleaned_data
+WHERE date >= '2024-01-01'
+GROUP BY category
+HAVING COUNT(*) > 10
+ORDER BY total_value DESC;</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Card -->
+        <div class="card dashboard-card animate-fade-in" style="animation-delay: 0.4s">
+            <div class="card-header">
+                <h3 class="card-title">Interactive Dashboard</h3>
+                <p class="card-description">
+                    Power BI visualization with interactive drill-down capabilities
+                </p>
+            </div>
+            <div class="card-content">
+                <!-- Power BI Embed Placeholder -->
+                <div class="dashboard-placeholder">
+                    <div class="dashboard-placeholder-content">
+                        <div class="dashboard-placeholder-inner">
+                            <div class="dashboard-icon">📊</div>
+                            <p class="dashboard-title">
+                                Power BI Dashboard Embed
+                            </p>
+                            <p class="dashboard-subtitle">
+                                Replace the iframe src below with your Power BI dashboard embed link
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Actual iframe - hidden by default, uncomment and add your link -->
+                    <!-- 
+                    <iframe 
+                        title="Power BI Dashboard"
+                        width="100%" 
+                        height="600"
+                        src="YOUR_POWER_BI_EMBED_LINK_HERE"
+                        frameborder="0" 
+                        allowfullscreen="true"
+                        style="width: 100%;"
+                    ></iframe> 
+                    -->
+                </div>
+
+                <!-- Project Highlights -->
+                <div class="highlights-grid">
+                    <div class="highlight-card">
+                        <h4 class="highlight-title">
+                            🐍 Data Cleaning
+                        </h4>
+                        <p class="highlight-description">
+                            Python pandas for data preprocessing, handling missing values, and data transformation
+                        </p>
+                    </div>
+                    <div class="highlight-card">
+                        <h4 class="highlight-title">
+                            🗄️ SQL Analysis
+                        </h4>
+                        <p class="highlight-description">
+                            Complex queries for data aggregation, joins, and statistical calculations
+                        </p>
+                    </div>
+                    <div class="highlight-card">
+                        <h4 class="highlight-title">
+                            📊 Visualization
+                        </h4>
+                        <p class="highlight-description">
+                            Interactive Power BI dashboards with drill-down capabilities and KPI tracking
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleCollapsible(id) {
+            const content = document.getElementById(id + '-content');
+            const chevron = document.getElementById(id + '-chevron');
+            
+            content.classList.toggle('open');
+            chevron.classList.toggle('rotated');
+        }
+    </script>
+</body>
+</html>

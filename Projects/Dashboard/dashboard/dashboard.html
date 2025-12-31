@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project: AI Chatbot</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="prism.css">
+    <link rel="shortcut icon" href="faviconb.jpeg" type="image/x-icon">
+</head>
+<body>
+    <div class="container">
+        <!-- Back Button -->
+        <button class="back-button" onclick="window.history.back()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Back to Projects
+        </button>
+
+        <!-- Project Header -->
+        <div class="project-header animate-fade-in">
+            <h1 class="project-title">
+                Typing Competition Dashboard
+            </h1>
+            <p class="project-description">
+             A real-time analytics platform that powers a school-wide typing competition, displaying leaderboards and results for all competing classes, powered with machine learning models and python libraries for performance analysis and prediction.
+            </p>
+        </div>
+
+        <!-- Tech Stack Badges -->
+        <div class="tech-badges animate-fade-in" style="animation-delay: 0.1s">
+            <div class="tech-badge">
+                <span>🐍</span>
+                <span>Python</span>
+            </div>
+            <div class="tech-badge">
+                <span>🤖</span>
+                <span>AI / ML</span>
+            </div>
+            <div class="tech-badge">
+                <span>💬</span>
+                <span>Flask</span>
+            </div>
+        </div>
+
+
+        <!-- Project Video Demo -->
+        <div class="card animate-fade-in" style="animation-delay: 0.2s">
+            <div class="card-header">
+                <h3 class="card-title">Demo Video</h3>
+                <p class="card-description">
+                    Watch the chatbot in action
+                </p>
+            </div>
+            <div class="card-content">
+                <div class="video-wrapper">
+                    <video controls poster="dashboard-thumbnail.jpg">
+                        <source src="dashboard-demo.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        </div>
+
+
+
+        
+        <!-- Project Explanation -->
+        <div class="card animate-fade-in" style="animation-delay: 0.15s">
+            <div class="card-header">
+                <h3 class="card-title">Why the Video</h3>
+                <p class="card-description">
+                    What this project is demonstrated via video and not hosted Live
+                </p>
+            </div>
+            <div class="card-content">
+                <p class="project-text">
+                    Due to restricted admin access on the school's shared Bluehost hosting and budget constraints, I demonstrated the fully functional dashboard through a live video demo instead of a traditional web deployment.
+                </p>
+
+        
+            </div>
+        </div>
+
+
+        <!-- Python Code Snippet -->
+        <div class="card animate-fade-in" style="animation-delay: 0.25s">
+            <div class="card-header">
+                <div class="card-header-clickable" onclick="toggleCollapsible('python')">
+                    <div class="card-title-wrapper">
+                        <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="16 18 22 12 16 6"></polyline>
+                            <polyline points="8 6 2 12 8 18"></polyline>
+                        </svg>
+                        <h3 class="card-title">Python AI Logic</h3>
+                    </div>
+                    <svg id="python-chevron" class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <p class="card-description">
+                    Core Python logic for the chatbot
+                </p>
+            </div>
+            <div id="python-content" class="collapsible-content">
+                <div class="card-content">
+                    <div class="code-block">
+<pre class="language-python"><code>
+    
+import dash
+from dash import dcc, html
+from dash.dependencies import Input, Output
+import plotly.express as px
+import pandas as pd
+from sklearn.cluster import KMeans
+
+
+df = pd.read_csv('typing_competition.csv')  # Replace with your CSV file path
+
+# Data Cleaning
+df['ACCURACY'] = df['ACCURACY'].str.rstrip('%').astype('float') / 100.0
+df['SPEED'] = df['SPEED'].str.rstrip('wpm').astype('float')
+df['TOTAL SCORE'] = df['TOTAL SCORE'].str.rstrip(' points').astype('float')
+df['GR.NO'] = df['GR.NO'].replace('-', pd.NA)
+
+
+df['SPEED_ACCURACY'] = df['SPEED'] * df['ACCURACY']  
+
+# Cluster students
+kmeans = KMeans(n_clusters=3, random_state=42)
+df['PERFORMANCE_CLUSTER'] = kmeans.fit_predict(df[['SPEED', 'ACCURACY']])
+df['PERFORMANCE_CATEGORY'] = df['PERFORMANCE_CLUSTER'].map({0: 'Low', 1: 'Medium', 2: 'High'})
+
+
+app = dash.Dash(__name__)
+
+
+app.layout = html.Div([
+    # Background Animation (Gradient)
+    html.Div(style={
+        'position': 'fixed',
+        'top': 0,
+        'left': 0,
+        'width': '100%',
+        'height': '100%',
+        'zIndex': -1,
+        'background': 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)',
+        'animation': 'gradientAnimation 10s ease infinite'
+    }),
+    
+    
+    html.Div([
+        dcc.Link('Leaderboard', href='#leaderboard', style={'marginRight': '20px', 'color': '#fff', 'textDecoration': 'none', 'fontWeight': 'bold'}),
+        dcc.Link('Class-wise Performance', href='#class-performance', style={'marginRight': '20px', 'color': '#fff', 'textDecoration': 'none', 'fontWeight': 'bold'}),
+        dcc.Link('Accuracy vs. Speed', href='#accuracy-speed', style={'marginRight': '20px', 'color': '#fff', 'textDecoration': 'none', 'fontWeight': 'bold'}),
+        dcc.Link('Predictive Insights', href='#predictive-insights', style={'marginRight': '20px', 'color': '#fff', 'textDecoration': 'none', 'fontWeight': 'bold'}),
+        dcc.Link('Performance Clusters', href='#performance-clusters', style={'marginRight': '20px', 'color': '#fff', 'textDecoration': 'none', 'fontWeight': 'bold'}),
+    ], style={'position': 'sticky', 'top': '0', 'backgroundColor': 'rgba(0, 0, 0, 0.5)', 'padding': '10px', 'zIndex': '1000', 'textAlign': 'center'}),
+    
+    
+    html.Div(id='leaderboard', style={'padding': '20px', 'backgroundColor': 'rgba(255, 255, 255, 0.8)', 'margin': '20px', 'borderRadius': '10px'}, children=[
+        html.H3("Leaderboard", style={'color': '#3498db', 'fontFamily': 'Arial'}),
+        html.P("This section shows the top 10 performers based on their total score. The total score is calculated as 60% of speed and 40% of accuracy.", 
+               style={'fontSize': '16px', 'color': '#2c3e50'}),
+        dcc.Graph(
+            id='leaderboard-graph',
+            figure=px.bar(df.nlargest(10, 'TOTAL SCORE'), x='NAME', y='TOTAL SCORE', 
+                          title="Top 10 Performers", color='TOTAL SCORE', 
+                          color_continuous_scale='Viridis')
+        ) 
+    ]),
+    
+
+    html.Div(id='class-performance', style={'padding': '20px', 'backgroundColor': 'rgba(255, 255, 255, 0.8)', 'margin': '20px', 'borderRadius': '10px'}, children=[
+        html.H3("Class-wise Performance", style={'color': '#3498db', 'fontFamily': 'Arial'}),
+        html.P("This section compares the performance of different classes. Each box represents the distribution of total scores for a class.", 
+               style={'fontSize': '16px', 'color': '#2c3e50'}),
+        dcc.Graph(
+            id='class-performance-graph',
+            figure=px.box(df, x='CLASS', y='TOTAL SCORE', color='CLASS', 
+                          title="Class-wise Performance")
+        )
+    ]),
+    
+    
+    html.Div(id='accuracy-speed', style={'padding': '20px', 'backgroundColor': 'rgba(255, 255, 255, 0.8)', 'margin': '20px', 'borderRadius': '10px'}, children=[
+        html.H3("Accuracy vs. Speed (3D)", style={'color': '#3498db', 'fontFamily': 'Arial'}),
+        html.P("This 3D scatter plot shows the relationship between speed, accuracy, and total score. Each point represents a student.", 
+               style={'fontSize': '16px', 'color': '#2c3e50'}),
+        dcc.Graph(
+            id='accuracy-speed-graph',
+            figure=px.scatter_3d(df, x='SPEED', y='ACCURACY', z='TOTAL SCORE', 
+                                 color='PERFORMANCE_CATEGORY', title="Accuracy vs. Speed (3D)")
+        )
+    ]),
+    
+
+    html.Div(id='predictive-insights', style={'padding': '20px', 'backgroundColor': 'rgba(255, 255, 255, 0.8)', 'margin': '20px', 'borderRadius': '10px'}, children=[
+        html.H3("Predictive Insights", style={'color': '#3498db', 'fontFamily': 'Arial'}),
+        html.P("This section predicts your total score based on your current speed and accuracy. The total score is calculated as 60% of speed and 40% of accuracy.", 
+               style={'fontSize': '16px', 'color': '#2c3e50'}),
+        
+        
+        html.Div([
+            html.Label("Enter Your Current Speed (WPM):", style={'fontWeight': 'bold'}),
+            dcc.Slider(id='speed-input', min=0, max=100, step=1, value=30, 
+                       marks={i: str(i) for i in range(0, 101, 10)}, 
+                       tooltip={"placement": "bottom", "always_visible": True}),
+            html.Br(),
+            html.Label("Enter Your Current Accuracy (%):", style={'fontWeight': 'bold'}),
+            dcc.Slider(id='accuracy-input', min=0, max=100, step=1, value=80, 
+                       marks={i: str(i) for i in range(0, 101, 10)}, 
+                       tooltip={"placement": "bottom", "always_visible": True}),
+        ], style={'marginBottom': '20px'}),
+        
+        
+        html.Div(id='predicted-score', style={'fontWeight': 'bold', 'color': '#e74c3c', 'fontSize': '20px'}),
+        html.Br(),
+        
+        
+        
+        html.Div(id='prediction-explanation', style={'fontWeight': 'bold', 'color': '#2c3e50', 'fontSize': '16px'}),
+        html.Br(),
+        
+        
+        html.Div(id='recommendations', style={'fontWeight': 'bold', 'color': '#2c3e50', 'fontSize': '16px'}),
+        html.Br(),
+        
+       
+        dcc.Graph(id='prediction-gauge')
+    ]),
+    
+   
+    html.Div(id='performance-clusters', style={'padding': '20px', 'backgroundColor': 'rgba(255, 255, 255, 0.8)', 'margin': '20px', 'borderRadius': '10px'}, children=[
+        html.H3("Student Performance Clusters", style={'color': '#3498db', 'fontFamily': 'Arial'}),
+        html.P("This section groups students into performance categories (Low, Medium, High) based on their speed and accuracy.", 
+               style={'fontSize': '16px', 'color': '#2c3e50'}),
+        dcc.Graph(
+            id='performance-clusters-graph',
+            figure=px.scatter(df, x='SPEED', y='ACCURACY', color='PERFORMANCE_CATEGORY', 
+                              title="Student Performance Clusters", animation_frame='PERFORMANCE_CATEGORY')
+        )
+    ])
+])
+
+# Predictive Insights
+@app.callback(
+    [Output('predicted-score', 'children'),
+     Output('prediction-explanation', 'children'),
+     Output('recommendations', 'children'),
+     Output('prediction-gauge', 'figure')],
+    [Input('speed-input', 'value'),
+     Input('accuracy-input', 'value')]
+)
+def update_predictions(speed, accuracy):
+    # Calculate the predicted score using 60% speed and 40% accuracy
+    predicted_score = (0.6 * speed) + (0.4 * accuracy)
+    
+    # Explanation of factors
+    explanation = (
+        f"Your predicted score is calculated as 60% of speed ({0.6 * speed:.2f}) "
+        f"and 40% of accuracy ({0.4 * accuracy:.2f})."
+    )
+    
+    # Personalized recommendations
+    if speed < 30 and accuracy < 70:
+        recommendations = "Focus on both speed and accuracy drills to improve your score."
+    elif speed < 30:
+        recommendations = "Focus on speed drills to type faster."
+    elif accuracy < 70:
+        recommendations = "Focus on accuracy drills to reduce errors."
+    else:
+        recommendations = "Keep up the good work! You're doing great."
+    
+    # Score Predictor
+    gauge_fig = {
+        'data': [
+            {
+                'type': 'indicator',
+                'mode': 'gauge+number',
+                'value': predicted_score,
+                'title': {'text': 'Predicted Total Score'},
+                'gauge': {
+                    'axis': {'range': [0, 100]},
+                    'steps': [
+                        {'range': [0, 50], 'color': 'lightgray'},
+                        {'range': [50, 80], 'color': 'gray'},
+                        {'range': [80, 100], 'color': 'darkgray'}
+                    ],
+                    'threshold': {
+                        'line': {'color': 'red', 'width': 4},
+                        'thickness': 0.75,
+                        'value': predicted_score
+                    }
+                }
+            }
+        ],
+        'layout': {'height': 300}
+    }
+    
+    return (
+        f"Predicted Total Score: {predicted_score:.2f}",
+        explanation,
+        recommendations,
+        gauge_fig
+    )
+
+
+if __name__ == '__main__':
+    app.run_server(debug=True)
+    
+</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project Highlights Grid -->
+        <div class="highlights-grid">
+            <div class="highlight-card">
+                <h4 class="highlight-title">
+                    🐍 Python AI
+                </h4>
+                <p class="highlight-description">
+                    Core logic of chatbot implemented in Python
+                </p>
+            </div>
+            <div class="highlight-card">
+                <h4 class="highlight-title">
+                    🤖 NLP Integration
+                </h4>
+                <p class="highlight-description">
+                    Natural Language Processing for understanding queries
+                </p>
+            </div>
+            <div class="highlight-card">
+                <h4 class="highlight-title">
+                    💬 Real-time Responses
+                </h4>
+                <p class="highlight-description">
+                    Provides intelligent responses to user messages
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleCollapsible(id) {
+            const content = document.getElementById(id + '-content');
+            const chevron = document.getElementById(id + '-chevron');
+            content.classList.toggle('open');
+            chevron.classList.toggle('rotated');
+        }
+    </script>
+
+    <script src="prism.js"></script>
+</body>
+</html>
+
+
+
+
+

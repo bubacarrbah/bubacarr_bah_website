@@ -1,0 +1,721 @@
+/* General Table Styles */
+
+h1{
+    width: 100%;
+    background: linear-gradient(45deg,#6610f2,#311f60, #140e6b);
+    margin-top: 0%;
+    height: 60%;
+    padding: 2%;
+    text-align: center;
+    animation: appear linear;
+    animation-timeline: view();
+    animation-range: entry 0 cover 40%;
+}
+h1 a{
+    color: #000000;
+    gap: 20px;
+    text-align: center;
+}
+.grade{
+    font-weight: 50px;
+    text-align: center;
+    margin-bottom: -0%;
+    margin-top: 3%;
+    animation: appear linear;
+    animation-timeline: view();
+    animation-range: entry 0 cover 40%;
+  
+}
+.tg {
+    border-collapse: collapse;
+    border-color: #aabcfe;
+    border-spacing: 0;
+    margin: 0px auto;
+    width: 80%;
+    animation: appear linear;
+    animation-timeline: view();
+    animation-range: entry 0 cover 40%;
+  
+}
+
+/* Table Cell Styles */
+.tg td {
+    background-color: #EBF5FF;
+    border-bottom-width: 1px;
+    border-color: #9ABAD9;
+    border-style: solid;
+    border-top-width: 1px;
+    border-width: 0px;
+    color: #444;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    overflow: hidden;
+    padding: 10px 5px;
+    word-break: normal;
+    animation: appear linear;
+    animation-timeline: view();
+    animation-range: entry 0 cover 40%;
+}
+
+
+/* Table Header Styles */
+.tg th {
+    background-color: #409cff;
+    border-bottom-width: 1px;
+    border-color: #9ABAD9;
+    border-style: solid;
+    border-top-width: 1px;
+    border-width: 0px;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    overflow: hidden;
+    padding: 10px 5px;
+    word-break: normal;
+    animation: appear linear;
+    animation-timeline: view();
+    animation-range: entry 0 cover 40%;
+}
+
+/* Sticky Headers and Special Styling */
+.tg .tg-t6xh,
+.tg .tg-j4xr {
+    background-color: #aabcfe;
+    border-color: #000000;
+    color: #000000;
+    font-family: "Arial Black", Gadget, sans-serif !important;
+    font-style: italic;
+    font-weight: bold;
+    position: -webkit-sticky;
+    position: sticky;
+    text-align: center;
+    top: -1px;
+    will-change: transform;
+    animation: appear linear;
+    animation-timeline: view();
+    animation-range: entry 0 cover 40%;
+}
+
+.tg .tg-t6xh {
+    vertical-align: bottom;
+}
+
+.tg .tg-j4xr {
+    vertical-align: middle;
+}
+
+/* Special Row and Cell Backgrounds */
+.tg .tg-c1dp {
+    background-color: #D2E4FC;
+    text-align: center;
+    vertical-align: bottom;
+}
+
+.tg .tg-i4ih {
+    background-color: #ffccc9;
+    text-align: center;
+    vertical-align: bottom;
+}
+
+.tg .tg-ljam {
+    border-color: #000000;
+    text-align: center;
+    vertical-align: bottom;
+}
+
+.tg .tg-rvbm {
+    background-color: #ffccc9;
+    border-color: #ffffff;
+    text-align: center;
+    vertical-align: bottom;
+}
+
+.tg .tg-f0ep {
+    background-color: #D2E4FC;
+    text-align: left;
+    vertical-align: bottom;
+}
+
+.tg .tg-7zrl {
+    text-align: left;
+    vertical-align: bottom;
+}
+
+.tg .tg-8d8j {
+    text-align: center;
+    vertical-align: bottom;
+}
+
+.tg .tg-nh82 {
+    border-color: #6665cd;
+    text-align: center;
+    vertical-align: bottom;
+}
+
+/* Sorting Styles for Table Headers */
+.tg-sort-header {
+    cursor: pointer;
+}
+
+.tg-sort-header::-moz-selection,
+.tg-sort-header::selection {
+    background: 0 0;
+}
+
+.tg-sort-header:after {
+    content: '';
+    float: right;
+    margin-top: 7px;
+    border-width: 0 5px 5px;
+    border-style: solid;
+    border-color: #404040 transparent;
+    visibility: hidden;
+}
+
+.tg-sort-header:hover:after {
+    visibility: visible;
+}
+
+.tg-sort-asc:after,
+.tg-sort-asc:hover:after,
+.tg-sort-desc:after {
+    visibility: visible;
+    opacity: .4;
+}
+
+.tg-sort-desc:after {
+    border-bottom: none;
+    border-width: 5px 5px 0;
+}
+
+/* Mobile responsiveness */
+@media screen and (max-width: 767px) {
+    .tg {
+        width: auto !important;
+    }
+
+    .tg col {
+        width: auto !important;
+    }
+
+    .tg-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        margin: auto 0px;
+    }
+}
+
+
+
+/* General Table Styles */
+.tg {
+    border-collapse: collapse;
+    border-color: #aabcfe;
+    border-spacing: 0;
+    border-style: solid;
+    border-width: 1px;
+    margin: 0px auto;
+    animation: appear linear;
+    animation-timeline: view();
+    animation-range: entry 0 cover 40%;
+  
+}
+
+/* Table Cell Styles */
+.tg td {
+    background-color: #e8edff;
+    border-color: #aabcfe;
+    border-style: solid;
+    border-width: 0px;
+    color: #669;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    overflow: hidden;
+    padding: 10px 5px;
+    word-break: normal;
+    animation: appear linear;
+    animation-timeline: view();
+    animation-range: entry 0 cover 40%;
+  
+}
+
+/* Table Header Styles */
+.tg th {
+    background-color: #b9c9fe;
+    border-color: #aabcfe;
+    border-style: solid;
+    border-width: 0px;
+    color: #039;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    overflow: hidden;
+    padding: 10px 5px;
+    word-break: normal;
+    animation: appear linear;
+    animation-timeline: view();
+    animation-range: entry 0 cover 40%;
+}
+
+/* Sticky Headers and Special Styling */
+.tg .tg-trme,
+.tg .tg-q1p7,
+.tg .tg-l3an {
+    background-color: #aabcfe;
+    color: #0D0D0D;
+    font-family: "Arial Black", Gadget, sans-serif !important;
+    font-weight: bold;
+    position: -webkit-sticky;
+    position: sticky;
+    text-align: center;
+    top: -1px;
+    will-change: transform;
+}
+
+.tg .tg-trme {
+    vertical-align: bottom;
+}
+
+.tg .tg-q1p7 {
+    font-style: italic;
+    vertical-align: bottom;
+}
+
+.tg .tg-l3an {
+    vertical-align: bottom;
+}
+
+/* Special Row and Cell Backgrounds */
+.tg .tg-c1dp {
+    background-color: #D2E4FC;
+    text-align: center;
+    vertical-align: bottom;
+}
+
+.tg .tg-i4ih {
+    background-color: #ffccc9;
+    text-align: center;
+    vertical-align: bottom;
+}
+
+.tg .tg-my4a {
+    background-color: #ffccc9;
+    text-align: center;
+    vertical-align: bottom;
+}
+
+.tg .tg-f0ep {
+    background-color: #D2E4FC;
+    text-align: left;
+    vertical-align: bottom;
+}
+
+.tg .tg-7zrl {
+    text-align: left;
+    vertical-align: bottom;
+}
+
+.tg .tg-8d8j {
+    text-align: center;
+    vertical-align: bottom;
+}
+
+/* Sorting Styles for Table Headers */
+.tg-sort-header {
+    cursor: pointer;
+}
+
+.tg-sort-header::-moz-selection,
+.tg-sort-header::selection {
+    background: 0 0;
+}
+
+.tg-sort-header:after {
+    content: '';
+    float: right;
+    margin-top: 7px;
+    border-width: 0 5px 5px;
+    border-style: solid;
+    border-color: #404040 transparent;
+    visibility: hidden;
+}
+
+.tg-sort-header:hover:after {
+    visibility: visible;
+}
+
+.tg-sort-asc:after,
+.tg-sort-asc:hover:after,
+.tg-sort-desc:after {
+    visibility: visible;
+    opacity: .4;
+}
+
+.tg-sort-desc:after {
+    border-bottom: none;
+    border-width: 5px 5px 0;
+}
+
+/* Mobile responsiveness */
+@media screen and (max-width: 767px) {
+    .tg {
+        width: auto !important;
+    }
+
+    .tg col {
+        width: auto !important;
+    }
+
+    .tg-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        margin: auto 0px;
+    }
+}
+
+/* General Table Styles */
+.tg {
+    border-collapse: collapse;
+    border-color: #aaa;
+    border-spacing: 0;
+    border-style: solid;
+    border-width: 1px;
+    margin: 0px auto;
+    animation: appear linear;
+    animation-timeline: view();
+    animation-range: entry 0 cover 40%;
+  
+}
+
+/* Table Cell Styles */
+.tg td {
+    background-color: #fff;
+    border-color: #aaa;
+    border-style: solid;
+    border-width: 0px;
+    color: #333;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    overflow: hidden;
+    padding: 10px 5px;
+    word-break: normal;
+}
+
+/* Table Header Styles */
+.tg th {
+    background-color: #f38630;
+    border-color: #aaa;
+    border-style: solid;
+    border-width: 0px;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    overflow: hidden;
+    padding: 10px 5px;
+    word-break: normal;
+}
+
+/* Sticky and Special Row Styles */
+.tg .tg-gxqz,
+.tg .tg-68uf,
+.tg .tg-v00i {
+    font-family: "Arial Black", Gadget, sans-serif !important;
+    position: -webkit-sticky;
+    position: sticky;
+    text-align: center;
+    top: -1px;
+    will-change: transform;
+}
+
+.tg .tg-gxqz {
+    font-weight: bold;
+    vertical-align: middle;
+}
+
+.tg .tg-68uf {
+    background-color: #305496;
+    font-style: italic;
+    vertical-align: middle;
+}
+
+.tg .tg-v00i {
+    background-color: #F4B084;
+    font-weight: bold;
+    vertical-align: bottom;
+}
+
+/* Special Row Backgrounds */
+.tg .tg-tsga {
+    background-color: #FCFBE3;
+    text-align: center;
+    vertical-align: bottom;
+}
+
+/* Standard Cell Styles */
+.tg .tg-7zrl {
+    text-align: left;
+    vertical-align: bottom;
+}
+
+.tg .tg-8d8j {
+    text-align: center;
+    vertical-align: bottom;
+}
+
+/* Sorting Styles for Table Headers */
+.tg-sort-header {
+    cursor: pointer;
+}
+
+.tg-sort-header::-moz-selection,
+.tg-sort-header::selection {
+    background: 0 0;
+}
+
+.tg-sort-header:after {
+    content: '';
+    float: right;
+    margin-top: 7px;
+    border-width: 0 5px 5px;
+    border-style: solid;
+    border-color: #404040 transparent;
+    visibility: hidden;
+}
+
+.tg-sort-header:hover:after {
+    visibility: visible;
+}
+
+.tg-sort-asc:after,
+.tg-sort-asc:hover:after,
+.tg-sort-desc:after {
+    visibility: visible;
+    opacity: .4;
+}
+
+.tg-sort-desc:after {
+    border-bottom: none;
+    border-width: 5px 5px 0;
+}
+
+/* finalround */
+.finaltg {
+    border-collapse: collapse;
+    border-color: #aaa;
+    border-spacing: 2px;
+    border-style: solid;
+    border-width: 2px;
+    margin: 0px auto;
+    animation: appear linear;
+    animation-timeline: view();
+    animation-range: entry 0 cover 40%;
+    width: 80%;
+  
+}
+
+/* Table Cell Styles */
+.finaltg td {
+    background-color: #fff;
+    border-color: #aaa;
+    border-style: solid;
+    border-width: 0px;
+    color: #333;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    overflow: hidden;
+    padding: 10px 5px;
+    word-break: normal;
+}
+
+/* Table Header Styles */
+.finaltg th {
+    background-color: #f38530;
+    border-color: #aaa;
+    border-style: solid;
+    border-width: 0px;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    overflow: hidden;
+    padding: 10px 5px;
+    word-break: normal;
+}
+
+/* Sticky and Special Row Styles */
+.finaltg .tg-gxqz,
+.finaltg .tg-68uf,
+.finaltg .tg-v00i {
+    font-family: "Arial Black", Gadget, sans-serif !important;
+    position: -webkit-sticky;
+    position: sticky;
+    text-align: center;
+    top: -1px;
+    will-change: transform;
+}
+
+.finaltg .tg-gxqz {
+    font-weight: bold;
+    vertical-align: middle;
+}
+
+.finaltg .tg-68uf {
+    background-color:  #0a0a06bc;
+    font-style: italic;
+    vertical-align: middle;
+}
+
+.finaltg .tg-v00i {
+    background-color: #f3853089;
+    font-weight: bold;
+    vertical-align: bottom;
+}
+
+/* Special Row Backgrounds */
+.finaltg .tg-tsga {
+    background-color: #ecd0bd ;
+    text-align: center;
+    vertical-align: bottom;
+}
+
+/* Standard Cell Styles */
+.finaltg .tg-7zrl {
+    text-align: left;
+    vertical-align: bottom;
+}
+
+.finaltg .tg-8d8j {
+    text-align: center;
+    vertical-align: bottom;
+}
+
+/* Sorting Styles for Table Headers */
+.tg-sort-header {
+    cursor: pointer;
+}
+
+.tg-sort-header::-moz-selection,
+.tg-sort-header::selection {
+    background: 0 0;
+}
+
+.tg-sort-header:after {
+    content: '';
+    float: right;
+    margin-top: 7px;
+    border-width: 0 5px 5px;
+    border-style: solid;
+    border-color: #404040 transparent;
+    visibility: hidden;
+}
+
+.tg-sort-header:hover:after {
+    visibility: visible;
+}
+
+.tg-sort-asc:after,
+.tg-sort-asc:hover:after,
+.tg-sort-desc:after {
+    visibility: visible;
+    opacity: .4;
+}
+
+.tg-sort-desc:after {
+    border-bottom: none;
+    border-width: 5px 5px 0;
+}
+.content{
+    width: 80%;
+    text-align: center;
+    font-size: 20px;
+    margin-top: 2%;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10%;
+    animation: appear linear;
+    animation-timeline: view();
+    animation-range: entry 0 cover 40%;
+  
+}
+.line-container {
+    position: relative;          
+    height: 100px;              
+    width: 100px;               
+    margin: 20px;               
+    animation: appear linear;
+      animation-timeline: view();
+      animation-range: entry 0 cover 40%;
+  }
+  
+  .vertical-line {
+    width: 3px;                 
+    height: 100px;           
+    background-color: #6610f2;    
+    position: absolute;          
+    left: 70%;                   
+    top: 0;                     
+    transform: translateX(-50%); 
+  }
+  
+  .horizontal-line {
+    height: 3px;                
+    width: 200px;               
+    background-color: #260c68;    
+    position: absolute;          
+    top: 50%;                   
+    left: 0;       
+    margin-left: 70px;             
+  }
+/* ------- footer ------- */
+
+.footer{
+    width: 100%;
+    text-align: center;
+    padding: 30px 0;
+    animation: appear linear;
+    animation-timeline: view();
+    animation-range: entry 0 cover 40%;
+    margin-top: 5%;
+}
+.footer h4{
+    margin-bottom: 25px;
+    margin-top: 20px;
+    font-weight: 800;
+    font-size: 25px;
+}
+.icons .fa-brands{
+    color: #f44336;
+    margin: 0 13px;
+    cursor: pointer;
+    padding: 18px 0;
+}
+
+/* Mobile responsiveness */
+@media screen and (max-width: 767px) {
+    .tg {
+        width: auto !important;
+    }
+
+    .tg col {
+        width: auto !important;
+    }
+
+    .tg-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        margin: auto 0px;
+    }
+    .tg-finalwrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        margin: auto 0px;
+    }
+    .vertical-line{
+        margin-left: -50px;
+      }
+      .horizontal-line{
+        display: none;
+      }
+}

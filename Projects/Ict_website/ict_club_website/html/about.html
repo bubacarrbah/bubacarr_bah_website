@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nusrat ICT club</title>
+    <link rel="stylesheet" href="ict_style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap" >
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="icon " href="eduford_img/blacklogo.png">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1L9H9LNGC5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-1L9H9LNGC5');
+</script>
+
+</head>
+<body>
+    <section class="sub-header">
+        <nav>
+            <!-- <a href="index.html"> -->
+                <a href="index.html">
+                <div class="sub-logo">
+                    <img src="eduford_img/clublogo.jpg" alt="">
+                </div>
+                </a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa-solid fa-times" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="admission.html">ADMISSION</a></li>
+                    <li><a href="about.html">ABOUT</a></li>
+                    <li><a href="courses.html">COURSE</a></li>
+                    <li><a href="blog.html">BLOG</a></li>
+                    <li><a href="contact.html">CONTACT</a><li>
+               </ul>
+           </div>
+           <i class="fa-solid fa-bars"onclick="showMenu()"></i>
+        </nav>   
+        <h1 class="headingone">About Us</h1>
+
+      
+
+    </section>
+
+    <section class="waves">
+        <svg class="hero-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+      viewBox="0 24 150 28 " preserveAspectRatio="none">
+      <defs>
+        <path id="wave-path" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z">
+      </defs>
+      <g class="wave1">
+        <use xlink:href="#wave-path" x="50" y="3" fill="rgba(255,255,255, .1)">
+      </g>
+      <g class="wave2">
+        <use xlink:href="#wave-path" x="50" y="0" fill="rgba(255,255,255, .2)">
+      </g>
+      <g class="wave3">
+        <use xlink:href="#wave-path" x="50" y="9" fill="#fff">
+      </g>
+    </svg>
+       </section>
+
+<!-- -------- about us content------- -->
+
+
+<section class="about-us">
+
+    <div class="row">
+        <div class="about-col">
+            <h1>Nusrat technology is the future</h1>
+            <p>Welcome to the ICT and Engineering Club! We are a vibrant community of students passionate about technology, innovation, and engineering. Our club aims to inspire curiosity and foster skills in areas such as coding, robotics, and electronics. Through hands-on projects, workshops, and collaborative activities, we provide a platform for members to explore their interests, develop practical skills, and engage with like-minded peers. Whether you’re a seasoned tech enthusiast or just starting your journey, there's a place for you here. Join us as we explore the exciting world of ICT and engineering together!</p>
+            <!-- <a href="" class="hero-btn red-btn" onclick="hideShow()">EXPLORE NOW</a> -->
+             <div class="sub-button">
+             <button onclick="hideShow()" class="sub-btn"> <span>EXPLORE MORE</span><i></i></button>
+             </div>
+             <div id="us" class="us">
+             <h3>Rules And Regulations</h3>
+             <ul>
+                <li> <B>COMING SOON!!!</B></li>
+               
+             </ul>
+             </div>
+        </div>
+        <div class="about-col">
+            <img src="eduford_img/aboutus.jpg" alt="">
+            </div>
+    </div>
+   
+</section>
+
+<!-- ------- Footer ------- -->
+ 
+<section class="footer">
+    <h4>About Us</h4>
+    <p>Empowering innovation and creativity in ICT and engineering. Join us on our journey to explore new technologies and create impactful solutions. </p>
+    <div class="icons">
+        <i class="fa-brands fa-facebook-f"></i>
+        <i class="fa-brands fa-whatsapp"></i>
+        <i class="fa-brands fa-github"></i>
+        <i class="fa-brands fa-instagram"></i>
+    </div>
+    <p>POWERED BY Ict&Engineering Club</p>
+    <div class="bottom-footer">
+        <p>Copyright &copy; <a href="index.html" style="text-decoration: none;">Ict&Engineering Club</a> - All rights reserved</p>
+    </div>
+</section>
+
+
+<!-- ------JavaScript for Toggle Menu -->
+    <script>
+        
+        var navLinks = document.getElementById("navLinks");
+
+        function showMenu(){
+            navLinks.style.right = "0";
+        }
+        function hideMenu(){
+            navLinks.style.right = "-200px";
+        }
+    
+
+     var div = document.getElementById('us');
+     var display = 0;    
+
+    function hideShow()
+     {
+       if(display == 0)
+       {
+        div.style.display = 'block';
+        display = 1;
+        
+       }
+       else
+       {
+        div.style.display = 'none';
+        display = 0;
+       }
+     }
+    </script>
+    
+</body>
+</html>

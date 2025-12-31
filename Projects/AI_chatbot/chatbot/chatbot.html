@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project: AI Chatbot</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="chatbot.css">
+    <link rel="stylesheet" href="prism.css">
+    <link rel="shortcut icon" href="faviconb.jpeg" type="image/x-icon">
+</head>
+<body>
+    <div class="container">
+        <!-- Back Button -->
+        <button class="back-button" onclick="window.history.back()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Back to Projects
+        </button>
+
+        <!-- Project Header -->
+        <div class="project-header animate-fade-in">
+            <h1 class="project-title">
+                Club Assistant Chatbot
+            </h1>
+            <p class="project-description">
+                An AI chatbot capable of understanding user queries and providing intelligent, context-aware responses.
+                Built with Python and machine learning libraries, the chatbot integrates natural language processing(NLP)
+                for enhanced conversation experience.
+            </p>
+        </div>
+
+        <!-- Tech Stack Badges -->
+        <div class="tech-badges animate-fade-in" style="animation-delay: 0.1s">
+            <div class="tech-badge">
+                <span>🐍</span>
+                <span>Python</span>
+            </div>
+            <div class="tech-badge">
+                <span>🤖</span>
+                <span>AI / ML</span>
+            </div>
+            <div class="tech-badge">
+                <span>💬</span>
+                <span>Chatbot NLP</span>
+            </div>
+        </div>
+
+      
+
+        <!-- Project Video Demo -->
+        <div class="card animate-fade-in" style="animation-delay: 0.2s">
+            <div class="card-header">
+                <h3 class="card-title">Demo Video</h3>
+                <p class="card-description">
+                    Watch the chatbot in action
+                </p>
+            </div>
+            <div class="card-content">
+                <div class="video-wrapper">
+                    <video controls poster="chatbot-thumbnail.jpg">
+                        <source src="chatbot-demo.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        </div>
+
+        <!-- Python Code Snippet -->
+        <div class="card animate-fade-in" style="animation-delay: 0.25s">
+            <div class="card-header">
+                <div class="card-header-clickable" onclick="toggleCollapsible('python')">
+                    <div class="card-title-wrapper">
+                        <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="16 18 22 12 16 6"></polyline>
+                            <polyline points="8 6 2 12 8 18"></polyline>
+                        </svg>
+                        <h3 class="card-title">Python AI Logic</h3>
+                    </div>
+                    <svg id="python-chevron" class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <p class="card-description">
+                    Core Python logic for the chatbot
+                </p>
+            </div>
+            <div id="python-content" class="collapsible-content">
+                <div class="card-content">
+                    <div class="code-block">
+<pre class="language-python"><code>
+    
+from flask import Flask, request, jsonify, render_template
+from chatterbot import ChatBot
+from chatterbot.trainers import ChatterBotCorpusTrainer
+from dotenv import load_dotenv
+import google.generativeai as genai
+import os
+import asyncio
+import time
+from cachetools import TTLCache
+from fuzzywuzzy import fuzz
+from fuzzywuzzy import process
+
+app = Flask(__name__)
+
+# Loading environment variables from .env file
+load_dotenv()
+
+# Retrieve the Gemini API key from .env
+gemini_api_key = os.getenv("***************************************")
+
+# Configure the Google Gemini API with your key
+genai.configure(api_key=gemini_api_key)
+
+# Initialize the chatbot using ChatterBot
+chatbot = ChatBot(
+    'ICT Club Bot',
+    storage_adapter='chatterbot.storage.SQLStorageAdapter',
+    database_uri='sqlite:///database.sqlite3'
+)
+
+# Train the chatbot on English language datahkbgvvd
+trainer = ChatterBotCorpusTrainer(chatbot)
+trainer.train("chatterbot.corpus.english")
+
+# Predefined responses for ICT club related questions
+predefined_responses = {
+    "what is the ict club": "The ICT and Engineering Club at Nusrat Senior Secondary School is a student-driven organization focused on technology, innovation, and engineering. The club promotes skills development in ICT, robotics, and engineering through workshops and projects.",
+    "why should i join the ict club": "By joining the ICT Club, you'll gain hands-on experience in coding, engineering, and other tech-related fields, while also developing teamwork, leadership, and problem-solving skills.",
+    "what activities does the ict club organize": "The club organizes coding, graphic designing, engineering, computer literacy and robotic workshops. Robotics competitions, tech seminars, and field trips to tech companies."
+    "who can join the ict club": "Any student at Nusrat Senior Secondary School with an interest in technology and engineering is welcome to join.",
+    "do i need any prior experience to join the ict club": "No prior experience is required! The club is open to students at all skill levels, from beginners to advanced learners.",
+    "are there any fees for joining the ict club": "Membership is free! However, some events or workshops may have a small participation fee.",
+}
+
+# Initialize the Gemini model
+gemini_model = genai.GenerativeModel("gemini-pro")
+
+# Cache for storing previously generated responses to avoid redundant API calls
+response_cache = TTLCache(maxsize=100, ttl=600)  # Cache expires in 10 minutes
+
+# Function to get bot response asynchronously
+async def fetch_gemini_response(user_input):
+    try:
+        print("Sending request to Google Gemini...")
+        response = await asyncio.to_thread(gemini_model.generate_content, user_input)
+        if hasattr(response, "text") and response.text:
+            return response.text.strip()
+        else:
+            return "I'm sorry, I couldn't find an answer to that."
+    except Exception as e:
+        print("Gemini API Error:", e)
+        return "I'm sorry, I couldn't process your request. Please try again later."
+
+# Function to get bot response with fuzzy matching and cache checking
+def get_bot_response(user_input):
+    user_input_lower = user_input.lower()
+
+    # Use fuzzy matching for predefined responses
+    best_match, score = process.extractOne(user_input_lower, predefined_responses.keys(), scorer=fuzz.token_sort_ratio)
+    if score > 80:  # If match confidence is high
+        return predefined_responses[best_match]
+
+    # Check cache first
+    cached_response = response_cache.get(user_input_lower)
+    if cached_response:
+        return cached_response
+
+    # Use Google Gemini API for general questions
+    bot_response = asyncio.run(fetch_gemini_response(user_input))
+    # Store the response in cache
+    response_cache[user_input_lower] = bot_response
+    return bot_response
+
+# Route to handle chat requests
+@app.route('/chat', methods=['POST'])
+def chat():
+    user_input = request.json.get('message')
+    if not user_input:
+        return jsonify({"error": "No message provided"}), 400
+
+    bot_response = get_bot_response(user_input)
+    return jsonify({"response": bot_response})
+
+# Route to serve the frontend (assuming you have an index.html file)
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+# Run the Flask app
+if __name__ == '__main__':
+    app.run(debug=True)
+
+</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+          <!-- Project Explanation -->
+        <div class="card animate-fade-in" style="animation-delay: 0.15s">
+            <div class="card-header">
+                <h3 class="card-title">Why The Video</h3>
+                <p class="card-description">
+                    Why this project is demonstrated via video and not hosted live
+                </p>
+            </div>
+            <div class="card-content">
+                <p class="project-text">
+                    Due to restricted admin access on the school's shared Bluehost hosting and budget constraints, I demonstrated the fully functional chatbot through a live video demo instead of a traditional web deployment. This approach showcases the chatbot's capabilities and user interactions without direct web hosting.
+                </p>
+            </div>
+        </div>
+
+        <!-- Project Highlights Grid -->
+        <div class="highlights-grid">
+            <div class="highlight-card">
+                <h4 class="highlight-title">
+                    🐍 Python AI
+                </h4>
+                <p class="highlight-description">
+                    Core logic of chatbot implemented in Python
+                </p>
+            </div>
+            <div class="highlight-card">
+                <h4 class="highlight-title">
+                    🤖 NLP Integration
+                </h4>
+                <p class="highlight-description">
+                    Natural Language Processing for understanding queries
+                </p>
+            </div>
+            <div class="highlight-card">
+                <h4 class="highlight-title">
+                    💬 Real-time Responses
+                </h4>
+                <p class="highlight-description">
+                    Provides intelligent responses to user messages
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleCollapsible(id) {
+            const content = document.getElementById(id + '-content');
+            const chevron = document.getElementById(id + '-chevron');
+            content.classList.toggle('open');
+            chevron.classList.toggle('rotated');
+        }
+    </script>
+
+    <script src="prism.js"></script>
+</body>
+</html>
+
+
+
+
+
+

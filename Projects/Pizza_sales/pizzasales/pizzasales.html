@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 1: Data Cleaning & Visualization</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="pizzasales.css">
+    <link rel="stylesheet" href="prism.css">
+    <link rel="shortcut icon" href="faviconb.jpeg" type="image/x-icon">
+</head>
+<body>
+    <div class="container">
+        <!-- Back Button -->
+        <button class="back-button" onclick="window.history.back()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Back to Projects
+        </button>
+
+        <!-- Project Header -->
+        <div class="project-header animate-fade-in">
+            <h1 class="project-title">
+                Pizza Sales Analysis
+            </h1>
+            <p class="project-description">
+               This project turns complex data into clear business intelligence. By integrating Python for analysis, SQL for querying, and Power BI for visualization, it delivers actionable insights through interactive dashboards.
+            </p>
+        </div>
+
+        <!-- Tech Stack Badges -->
+        <div class="tech-badges animate-fade-in" style="animation-delay: 0.1s">
+            <div class="tech-badge">
+                <span>🐍</span>
+                <span>Python</span>
+            </div>
+            <div class="tech-badge">
+                <span>🗄️</span>
+                <span>SQL</span>
+            </div>
+            <div class="tech-badge">
+                <span>📊</span>
+                <span>Power BI</span>
+            </div>
+        </div>
+
+        <!-- Code Snippets Section -->
+        <div style="margin-bottom: 2.5rem;">
+            <!-- Python Code Snippet -->
+            <div class="card animate-fade-in" style="animation-delay: 0.2s">
+                <div class="card-header">
+                    <div class="card-header-clickable" onclick="toggleCollapsible('python')">
+                        <div class="card-title-wrapper">
+                            <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="16 18 22 12 16 6"></polyline>
+                                <polyline points="8 6 2 12 8 18"></polyline>
+                            </svg>
+                            <h3 class="card-title">Python Data Cleaning</h3>
+                        </div>
+                        <svg id="python-chevron" class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </div>
+                    <p class="card-description">
+                        Preprocessing and transformation using pandas
+                    </p>
+                </div>
+                <div id="python-content" class="collapsible-content">
+                    <div class="card-content">
+                        <div class="code-block">
+                            <pre class="language-python"><code>
+                                import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from datetime import datetime
+
+# Load the data
+df = pd.read_csv('pizza_sales.csv')
+
+# 1. BASIC DATA EXPLORATION
+print("=" * 50)
+print("1. DATA OVERVIEW")
+print("=" * 50)
+print(f"Dataset shape: {df.shape}")
+print(f"\nColumns: {list(df.columns)}")
+print(f"\nFirst 5 rows:")
+print(df.head())
+print(f"\nData types:\n{df.dtypes}")
+
+# Check for missing values
+print(f"\nMissing values:\n{df.isnull().sum()}")
+
+# 2. DATA CLEANING & TRANSFORMATION
+print("\n" + "=" * 50)
+print("2. DATA TRANSFORMATIONS")
+print("=" * 50)
+
+# Convert date and time columns to proper datetime
+df['order_datetime'] = pd.to_datetime(df['order_date'] + ' ' + df['order_time'], format='%d-%m-%Y %H:%M:%S')
+df['order_date'] = pd.to_datetime(df['order_date'], format='%d-%m-%Y')
+
+# Extract useful datetime features
+df['order_hour'] = df['order_datetime'].dt.hour
+df['order_day'] = df['order_datetime'].dt.day
+df['order_day_name'] = df['order_datetime'].dt.day_name()
+df['order_month'] = df['order_datetime'].dt.month
+
+# Create price tiers based on unit_price
+df['price_tier'] = pd.cut(df['unit_price'], 
+                         bins=[0, 12, 16, 20, 26],
+                         labels=['Budget', 'Standard', 'Premium', 'Luxury'])
+
+print("Added new features: order_hour, order_day, order_day_name, order_month, price_tier")
+
+# 3. BASIC STATISTICS
+print("\n" + "=" * 50)
+print("3. DESCRIPTIVE STATISTICS")
+print("=" * 50)
+
+# Numerical columns
+print("Numerical statistics:")
+print(df[['quantity', 'unit_price', 'total_price']].describe())
+
+# Categorical columns
+print("\nCategorical columns:")
+categorical_cols = ['pizza_size', 'pizza_category', 'pizza_name']
+for col in categorical_cols:
+    print(f"\n{col} unique values ({df[col].nunique()}):")
+    print(df[col].unique()[:10])
+
+# 4. REVENUE ANALYSIS
+print("\n" + "=" * 50)
+print("4. REVENUE ANALYSIS")
+print("=" * 50)
+
+# Total revenue
+total_revenue = df['total_price'].sum()
+print(f"Total Revenue: ${total_revenue:,.2f}")
+
+# Average order value
+avg_order_value = df.groupby('order_id')['total_price'].sum().mean()
+print(f"Average Order Value: ${avg_order_value:,.2f}")
+
+# Revenue by category
+revenue_by_category = df.groupby('pizza_category')['total_price'].sum().sort_values(ascending=False)
+print(f"\nRevenue by Category:")
+for category, revenue in revenue_by_category.items():
+    print(f"  {category}: ${revenue:,.2f}")
+
+# Revenue by size
+revenue_by_size = df.groupby('pizza_size')['total_price'].sum().sort_values(ascending=False)
+print(f"\nRevenue by Size:")
+for size, revenue in revenue_by_size.items():
+    print(f"  {size}: ${revenue:,.2f}")
+
+# 5. SALES VOLUME ANALYSIS
+print("\n" + "=" * 50)
+print("5. SALES VOLUME ANALYSIS")
+print("=" * 50)
+
+# Total pizzas sold
+total_pizzas = df['quantity'].sum()
+print(f"Total Pizzas Sold: {total_pizzas}")
+
+# Top 10 pizzas by quantity sold
+top_pizzas = df.groupby('pizza_name')['quantity'].sum().sort_values(ascending=False).head(10)
+print("\nTop 10 Pizzas by Quantity Sold:")
+for pizza, qty in top_pizzas.items():
+    print(f"  {pizza}: {qty} units")
+
+# Orders per day
+orders_per_day = df.groupby('order_date')['order_id'].nunique()
+print(f"\nAverage orders per day: {orders_per_day.mean():.1f}")
+print(f"Busiest day: {orders_per_day.idxmax().strftime('%Y-%m-%d')} ({orders_per_day.max()} orders)")
+
+# 6. TIME-BASED ANALYSIS
+print("\n" + "=" * 50)
+print("6. TIME-BASED ANALYSIS")
+print("=" * 50)
+
+# Sales by hour
+sales_by_hour = df.groupby('order_hour')['total_price'].sum()
+peak_hour = sales_by_hour.idxmax()
+print(f"Peak sales hour: {peak_hour}:00 (${sales_by_hour[peak_hour]:,.2f})")
+
+# Sales by day of week
+sales_by_day = df.groupby('order_day_name')['total_price'].sum()
+print("\nSales by Day of Week:")
+for day in ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']:
+    if day in sales_by_day.index:
+        print(f"  {day}: ${sales_by_day[day]:,.2f}")
+
+# 7. CUSTOMER BEHAVIOR ANALYSIS
+print("\n" + "=" * 50)
+print("7. CUSTOMER BEHAVIOR ANALYSIS")
+print("=" * 50)
+
+# Average items per order
+items_per_order = df.groupby('order_id')['quantity'].sum().mean()
+print(f"Average items per order: {items_per_order:.1f}")
+
+# Most common pizza combinations in orders (simplified)
+print("\nMost common pizza categories in same order:")
+order_categories = df.groupby('order_id')['pizza_category'].apply(lambda x: ', '.join(sorted(set(x))))
+common_combos = order_categories.value_counts().head(5)
+for combo, count in common_combos.items():
+    print(f"  {combo}: {count} orders")
+
+# 8. PRICE ANALYSIS
+print("\n" + "=" * 50)
+print("8. PRICE ANALYSIS")
+print("=" * 50)
+
+# Price range by size
+price_stats = df.groupby('pizza_size')['unit_price'].agg(['min', 'max', 'mean'])
+print("Price statistics by size:")
+print(price_stats)
+
+# Most expensive pizza
+most_expensive = df.loc[df['unit_price'].idxmax()]
+print(f"\nMost expensive pizza: {most_expensive['pizza_name']} (${most_expensive['unit_price']})")
+
+# 9. SAVE PROCESSED DATA
+print("\n" + "=" * 50)
+print("9. SAVING PROCESSED DATA")
+print("=" * 50)
+
+# Save cleaned dataframe
+df.to_csv('pizza_sales_processed.csv', index=False)
+print("Processed data saved to 'pizza_sales_processed.csv'")
+
+# 10. CREATE VISUALIZATIONS (OPTIONAL)
+print("\n" + "=" * 50)
+print("10. VISUALIZATION EXAMPLES")
+print("=" * 50)
+print("Uncomment the plotting code below to generate visualizations")
+
+# # Example 1: Revenue by category (bar chart)
+# plt.figure(figsize=(10, 6))
+# revenue_by_category.plot(kind='bar')
+# plt.title('Revenue by Pizza Category')
+# plt.ylabel('Revenue ($)')
+# plt.xticks(rotation=45)
+# plt.tight_layout()
+# plt.show()
+
+# # Example 2: Sales by hour (line chart)
+# plt.figure(figsize=(10, 6))
+# sales_by_hour.sort_index().plot(kind='line', marker='o')
+# plt.title('Sales by Hour of Day')
+# plt.xlabel('Hour')
+# plt.ylabel('Revenue ($)')
+# plt.grid(True)
+# plt.tight_layout()
+# plt.show()
+
+# # Example 3: Top 10 pizzas (horizontal bar chart)
+# plt.figure(figsize=(10, 8))
+# top_pizzas.plot(kind='barh')
+# plt.title('Top 10 Pizzas by Quantity Sold')
+# plt.xlabel('Quantity Sold')
+# plt.tight_layout()
+# plt.show()
+
+print("\nAnalysis complete! Check the output for insights.")
+                            </code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQL Code Snippet -->
+            <div class="card animate-fade-in" style="animation-delay: 0.3s">
+                <div class="card-header">
+                    <div class="card-header-clickable" onclick="toggleCollapsible('sql')">
+                        <div class="card-title-wrapper">
+                            <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="16 18 22 12 16 6"></polyline>
+                                <polyline points="8 6 2 12 8 18"></polyline>
+                            </svg>
+                            <h3 class="card-title">SQL Analysis</h3>
+                        </div>
+                        <svg id="sql-chevron" class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </div>
+                    <p class="card-description">
+                        Complex queries for aggregation and calculations
+                    </p>
+                </div>
+                <div id="sql-content" class="collapsible-content">
+                    <div class="card-content">
+                        <div class="code-block">
+                            <pre class="language-sql"><code>
+                                -- Quick Dashboard Summary
+SELECT 
+    -- Sales Metrics
+    (SELECT SUM(total_price) FROM pizza_sales) AS total_revenue,
+    (SELECT SUM(quantity) FROM pizza_sales) AS total_pizzas_sold,
+    (SELECT COUNT(DISTINCT order_id) FROM pizza_sales) AS total_orders,
+    
+    -- Averages
+    (SELECT AVG(unit_price) FROM pizza_sales) AS avg_pizza_price,
+    
+    -- Top Category
+    (SELECT pizza_category 
+     FROM pizza_sales 
+     GROUP BY pizza_category 
+     ORDER BY SUM(total_price) DESC 
+     LIMIT 1) AS top_category,
+    
+    -- Peak Hour
+    (SELECT HOUR(order_time) 
+     FROM pizza_sales 
+     GROUP BY HOUR(order_time) 
+     ORDER BY SUM(total_price) DESC 
+     LIMIT 1) AS peak_hour;
+
+     -- Peak Hours Analysis
+WITH hourly_stats AS (
+    SELECT 
+        HOUR(order_time) AS hour,
+        COUNT(DISTINCT order_id) AS order_count,
+        SUM(total_price) AS revenue
+    FROM pizza_sales
+    GROUP BY HOUR(order_time)
+)
+SELECT 
+    hour,
+    order_count,
+    revenue,
+    revenue / order_count AS avg_revenue_per_order
+FROM hourly_stats
+ORDER BY revenue DESC;
+
+-- Category Performance by Size
+SELECT 
+    pizza_category,
+    pizza_size,
+    COUNT(*) AS orders,
+    SUM(total_price) AS revenue,
+    AVG(unit_price) AS avg_unit_price
+FROM pizza_sales
+GROUP BY pizza_category, pizza_size
+ORDER BY pizza_category, revenue DESC;
+                            </code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Card -->
+        <div class="card dashboard-card animate-fade-in" style="animation-delay: 0.4s">
+            <div class="card-header">
+                <h3 class="card-title">Interactive Dashboard</h3>
+                <p class="card-description">
+                    Power BI visualization with interactive drill-down capabilities
+                </p>
+            </div>
+            <div class="card-content">
+                <!-- Power BI Embed Placeholder -->
+             <div class="dashboard-placeholder">
+                <div class="dashboard-placeholder-content">
+
+                     <iframe title="Pizza_Sales_Report" width="100%" height="600" src="https://app.powerbi.com/view?r=eyJrIjoiM2U3ZGQyMzAtYjBjZi00MjU3LWFjYTItN2UzMzNjYjAxNmEyIiwidCI6ImIzYjZhMDVhLWZiY2EtNGZiOS05MTM4LTEwYzYwNGYxMzI2NSJ9" frameborder="0" allowFullScreen="true"></iframe>
+                    
+                </div> 
+                    
+                    
+
+            </div>
+
+                <!-- Project Highlights -->
+                <div class="highlights-grid">
+                    <div class="highlight-card">
+                        <h4 class="highlight-title">
+                            🐍 Data Cleaning
+                        </h4>
+                        <p class="highlight-description">
+                            Python pandas for data preprocessing, handling missing values, and data transformation
+                        </p>
+                    </div>
+                    <div class="highlight-card">
+                        <h4 class="highlight-title">
+                            🗄️ SQL Analysis
+                        </h4>
+                        <p class="highlight-description">
+                            Complex queries for data aggregation, joins, and statistical calculations
+                        </p>
+                    </div>
+                    <div class="highlight-card">
+                        <h4 class="highlight-title">
+                            📊 Visualization
+                        </h4>
+                        <p class="highlight-description">
+                            Interactive Power BI dashboards with drill-down capabilities and KPI tracking
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleCollapsible(id) {
+            const content = document.getElementById(id + '-content');
+            const chevron = document.getElementById(id + '-chevron');
+            
+            content.classList.toggle('open');
+            chevron.classList.toggle('rotated');
+        }
+    </script>
+    <script src="prism.js"></script>
+</body>
+</html>
